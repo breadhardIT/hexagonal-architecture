@@ -1,13 +1,11 @@
-package com.breadhardit.logistics.item.repository.entity;
+package com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.entity;
 
+import org.springframework.data.annotation.Id;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document
 @Getter
 @Setter
 @SuperBuilder

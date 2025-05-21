@@ -1,10 +1,11 @@
 package com.breadhardit.logistics.item.repository;
 
-import com.breadhardit.logistics.item.repository.entity.ItemEntity;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<ItemEntity, String> {
+import com.breadhardit.logistics.item.repository.entity.ItemEntity;
+
+import org.springframework.data.mongodb.repository.MongoRepository;
+
+public interface ItemRepository extends MongoRepository<ItemEntity, String> {
     List<ItemEntity> findByName(String name);
 }

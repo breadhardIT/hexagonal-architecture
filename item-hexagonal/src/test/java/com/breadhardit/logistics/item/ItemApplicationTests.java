@@ -79,7 +79,7 @@ class ItemApplicationTests {
 
     @Test
     void getItemById_shouldReturn200IfFound() throws Exception {
-        String id = itemJpaRepository.findAll().getFirst().getId();
+        String id = itemJpaRepository.findAll().get(0).getId();
         mockMvc.perform(MockMvcRequestBuilders.get("/items/".concat(id)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
@@ -111,7 +111,7 @@ class ItemApplicationTests {
 
     @Test
     void createItem_shouldReturn409IfDuplicated() throws Exception {
-        String existingItemName = itemJpaRepository.findAll().getFirst().getName();
+        String existingItemName = itemJpaRepository.findAll().get(0).getName();
 
         PostItemRequestDTO dto = PostItemRequestDTO.builder()
                 .name(existingItemName)

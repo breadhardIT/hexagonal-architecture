@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.breadhardit.logistics</groupId>
-	<artifactId>item</artifactId>
+	<artifactId>item-hexagonal</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>item</name>
 	<description>Item management microservice</description>

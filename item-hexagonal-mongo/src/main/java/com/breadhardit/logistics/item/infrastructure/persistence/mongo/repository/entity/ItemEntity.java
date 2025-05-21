@@ -1,4 +1,4 @@
-package com.breadhardit.logistics.item.repository.entity;
+package com.breadhardit.logistics.item.infrastructure.persistence.mongo.repository.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

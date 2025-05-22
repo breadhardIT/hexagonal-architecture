@@ -2,8 +2,8 @@ package com.breadhardit.logistics.item;
 
 import com.breadhardit.logistics.item.infrastructure.rest.dto.request.PatchItemRequestDTO;
 import com.breadhardit.logistics.item.infrastructure.rest.dto.request.PostItemRequestDTO;
-import com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.ItemJpaRepository;
-import com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.entity.ItemEntity;
+import com.breadhardit.logistics.item.infrastructure.persistence.mongo.repository.ItemMongoRepository;
+import com.breadhardit.logistics.item.infrastructure.persistence.mongo.repository.entity.ItemEntity;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.hamcrest.Matchers;
@@ -37,7 +37,7 @@ class ItemApplicationTests {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private ItemJpaRepository itemJpaRepository;
+    private ItemMongoRepository itemJpaRepository;
 
 
     @BeforeAll

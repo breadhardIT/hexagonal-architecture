@@ -14,37 +14,37 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemRepositoryAdapter implements ItemRepositoryPort {
     final ItemEntityMapper itemEntityMapper;
-    final ItemJpaRepository itemJpaRepository;
+    final ItemRepository itemRepository;
 
     @Override
     public List<Item> getItems() {
-        return itemJpaRepository.findAll().stream().map(itemEntityMapper::toDomain).toList();
+        return itemRepository.findAll().stream().map(itemEntityMapper::toDomain).toList();
     }
 
     @Override
     public Optional<Item> getItemById(String id) {
-        return itemJpaRepository.findById(id).map(itemEntityMapper::toDomain);
+        return itemRepository.findById(id).map(itemEntityMapper::toDomain);
     }
 
     @Override
     public void deleteItem(String id) {
-        itemJpaRepository.deleteById(id);
+        itemRepository.deleteById(id);
     }
 
     @Override
     public void updateItem(Item item) {
-        itemJpaRepository.save(itemEntityMapper.fromDomain(item));
+        itemRepository.save(itemEntityMapper.fromDomain(item));
     }
 
     @Override
     public String createItem(Item item) {
-        itemJpaRepository.save(itemEntityMapper.fromDomain(item));
+        itemRepository.save(itemEntityMapper.fromDomain(item));
         return item.getId();
     }
 
     @Override
     public Optional<Item> getItemByName(String name) {
-        List<ItemEntity> items = itemJpaRepository.findByName(name);
+        List<ItemEntity> items = itemRepository.findByName(name);
         return items.isEmpty() ? Optional.empty() : items.stream().findFirst().map(itemEntityMapper::toDomain);
     }
 }

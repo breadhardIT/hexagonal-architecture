@@ -30,6 +30,7 @@ import java.util.UUID;
 class ItemApplicationTests {
 
     static EasyRandom EASY_RANDOM;
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -56,8 +57,6 @@ class ItemApplicationTests {
         itemRepository.saveAll(data.stream().peek(e -> e.setId(UUID.randomUUID().toString())).toList());
     }
 
-    ;
-
     @Test
     void getAllItems_shouldReturn200() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/items"))
@@ -83,7 +82,6 @@ class ItemApplicationTests {
         mockMvc.perform(MockMvcRequestBuilders.get("/items/".concat(id)))
                 .andExpect(MockMvcResultMatchers.status().isOk());
     }
-
 
     @Test
     void createItem_shouldReturn201AndLocationHeader() throws Exception {

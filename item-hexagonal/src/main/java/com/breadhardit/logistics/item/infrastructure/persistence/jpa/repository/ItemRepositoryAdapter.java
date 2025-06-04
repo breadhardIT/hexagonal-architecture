@@ -2,49 +2,66 @@ package com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository
 
 import com.breadhardit.logistics.item.application.port.ItemRepositoryPort;
 import com.breadhardit.logistics.item.domain.Item;
+import com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.ItemJpaRepository;
 import com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.entity.ItemEntity;
-import com.breadhardit.logistics.item.infrastructure.persistence.jpa.repository.mapper.ItemEntityMapper;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
 public class ItemRepositoryAdapter implements ItemRepositoryPort {
-    final ItemEntityMapper itemEntityMapper;
-    final ItemJpaRepository itemJpaRepository;
+
+    private final ItemJpaRepository itemRepository;  // MongoDB Repository
+
+    @Autowired
+    public ItemRepositoryAdapter(ItemJpaRepository itemRepository) {
+        this.itemRepository = itemRepository;
+    }
 
     @Override
     public List<Item> getItems() {
-        return itemJpaRepository.findAll().stream().map(itemEntityMapper::toDomain).toList();
+        return itemRepository.findAll().stream()
+                .map(this::toDomain)  // Convert MongoDB Entity to Domain
+                .toList();
     }
 
     @Override
     public Optional<Item> getItemById(String id) {
-        return itemJpaRepository.findById(id).map(itemEntityMapper::toDomain);
+        return itemRepository.findById(id).map(this::toDomain);
     }
 
     @Override
     public void deleteItem(String id) {
-        itemJpaRepository.deleteById(id);
+        itemRepository.deleteById(id);
     }
 
     @Override
     public void updateItem(Item item) {
-        itemJpaRepository.save(itemEntityMapper.fromDomain(item));
+        itemRepository.save(fromDomain(item));  // Save the Domain object to MongoDB
     }
 
     @Override
     public String createItem(Item item) {
-        itemJpaRepository.save(itemEntityMapper.fromDomain(item));
+        itemRepository.save(fromDomain(item));  // Save the Domain object to MongoDB
         return item.getId();
     }
 
     @Override
     public Optional<Item> getItemByName(String name) {
-        List<ItemEntity> items = itemJpaRepository.findByName(name);
-        return items.isEmpty() ? Optional.empty() : items.stream().findFirst().map(itemEntityMapper::toDomain);
+        return itemRepository.findByName(name).stream()
+                .findFirst()
+                .map(this::toDomain);
+    }
+
+    // Convert ItemEntity (MongoDB) to Item (Domain)
+    private Item toDomain(ItemEntity itemEntity) {
+        return new Item(itemEntity.getId(), itemEntity.getName());
+    }
+
+    // Convert Item (Domain) to ItemEntity (MongoDB)
+    private ItemEntity fromDomain(Item item) {
+        return new ItemEntity(item.getId(), item.getName());
     }
 }

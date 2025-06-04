@@ -1,14 +1,26 @@
 package com.breadhardit.logistics.item.facade.dto.request;
 
-import lombok.Getter;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import lombok.extern.jackson.Jacksonized;
+import lombok.Builder;
 
-@SuperBuilder
-@Jacksonized
-@Getter
-@ToString
+@Builder
 public class PostItemRequestDTO {
-    final String name;
+    private String id;
+    private String name;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }
+

@@ -13,7 +13,6 @@ public class DeleteItemCommand {
     final ItemRepositoryPort itemRepository;
     @NonNull
     final String id;
-
     public void handle() throws InvalidItemException, ItemNotFoundException {
         try {
             UUID.fromString(id);
@@ -25,5 +24,4 @@ public class DeleteItemCommand {
         itemRepository.deleteItem(id);
 
     }
-
 }
